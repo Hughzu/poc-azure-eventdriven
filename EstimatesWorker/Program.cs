@@ -1,6 +1,5 @@
 ﻿using Shared;
 
-const string connectionString = "Endpoint=sb://poceventhubns.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Nl86kAe9uXau5CeTvENKckMBTxofTmJ5k+AEhB+n1/w=";
 const string eventHub = "estimates-domain";
 
 while (true)
@@ -13,7 +12,7 @@ while (true)
         Type = EventType.EstimatesSigned,
         Data = Guid.NewGuid(),
     };
-    ProducerConsumerFactory.Producer(connectionString,eventHub,"ESTIMATES",e);
+    ProducerConsumerFactory.Producer(Keys.connectionStringEH,eventHub,"ESTIMATES",e);
 
     Task.Delay(5000).Wait();
 }

@@ -1,8 +1,5 @@
 ﻿using Shared;
 
-const string connectionStringEH = "Endpoint=sb://poceventhubns.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Nl86kAe9uXau5CeTvENKckMBTxofTmJ5k+AEhB+n1/w=";
-const string connectionStringSA = "DefaultEndpointsProtocol=https;AccountName=merlinpoceventhubsa;AccountKey=l6/ILjHCWIAX2E4SD+PSef4VfgVtV74Zz7P3QW3n61rqVDJDSLdL6LojK7Y5+moEGbEJZlQNwqkL+AStAlsySQ==;EndpointSuffix=core.windows.net";
-
 // Billing
 const string eventHub = "billing-domain";
 const string container = "billing-container";
@@ -19,7 +16,7 @@ var interestingEvents = new List<EventType>()
 new Thread(() =>
 {
     Thread.CurrentThread.IsBackground = true;
-    ProducerConsumerFactory.Consumer(connectionStringSA, container, connectionStringEH, eventHub, "BillingWorker - BILLING QUEUE", 
+    ProducerConsumerFactory.Consumer(Keys.connectionStringSA, container, Keys.connectionStringEH, eventHub, "BillingWorker - BILLING QUEUE", 
         ProducerConsumerFactory.ProcessEventHandlerTemplate("BillingWorker - BILLING QUEUE"), 
         ProducerConsumerFactory.ProcessErrorHandlerTemplate);
 }).Start();
@@ -36,8 +33,8 @@ var e = new Event()
 new Thread(() =>
 {
     Thread.CurrentThread.IsBackground = true;
-    ProducerConsumerFactory.Consumer(connectionStringSA, estimatesContainer, connectionStringEH, estimatesEventHub, "BillingWorker - ESTIMATES QUEUE", 
-        ProducerConsumerFactory.ProcessEventHandlerTemplate("BillingWorker - ESTIMATES QUEUE", () => ProducerConsumerFactory.Producer(connectionStringEH, eventHub, "BillingWorker - ESTIMATES QUEUE", e), interestingEvents), 
+    ProducerConsumerFactory.Consumer(Keys.connectionStringSA, estimatesContainer, Keys.connectionStringEH, estimatesEventHub, "BillingWorker - ESTIMATES QUEUE", 
+        ProducerConsumerFactory.ProcessEventHandlerTemplate("BillingWorker - ESTIMATES QUEUE", () => ProducerConsumerFactory.Producer(Keys.connectionStringEH, eventHub, "BillingWorker - ESTIMATES QUEUE", e), interestingEvents), 
         ProducerConsumerFactory.ProcessErrorHandlerTemplate); ;
 }).Start();
 
