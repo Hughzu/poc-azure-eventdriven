@@ -1,6 +1,5 @@
 ﻿using Azure.Messaging.ServiceBus;
 using Newtonsoft.Json;
-using System.Diagnostics;
 using System.Text;
 
 namespace MessageBusShared
