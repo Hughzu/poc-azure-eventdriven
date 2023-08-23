@@ -48,3 +48,5 @@ msbuild.wrn
 .vs/
 
 Keys.cs
+**/Keys.cs
+**/Keys**
