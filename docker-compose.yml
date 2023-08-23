@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  devis-consumer-1:
+    image: ${DOCKER_REGISTRY-}devisconsumer
+    build:
+      context: .
+      dockerfile: Consumer-Devis/Dockerfile
+
+  devis-consumer-2:
+    image: ${DOCKER_REGISTRY-}devisconsumer
+    build:
+      context: .
+      dockerfile: Consumer-Devis/Dockerfile  
+
+  devis-publisher:
+    image: ${DOCKER_REGISTRY-}devispublisher
+    build:
+      context: .
+      dockerfile: Publisher/Dockerfile
+

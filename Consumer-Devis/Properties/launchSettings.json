@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Devis-Consumer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
