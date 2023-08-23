@@ -54,5 +54,5 @@ void sendDeposit()
         DataVersion = "1.0",
     };
 
-    MessageBusHelper.Send(Keys.NamespaceConnectionString, topicName, message);
+    MessageBusHelper.Send(Keys.NamespaceConnectionString, topicName, message, ConsoleColor.Magenta);
 }

@@ -17,12 +17,33 @@ Thread estimatesSender = new Thread(() =>
             DataVersion = "1.0",
         };
 
-        MessageBusHelper.Send(Keys.NamespaceConnectionString, topicName, message);
+        MessageBusHelper.Send(Keys.NamespaceConnectionString, topicName, message, ConsoleColor.Magenta);
 
         Thread.Sleep(5000);
     }
 });
 estimatesSender.Start();
+
+// Send messages to be filtered out by other topics
+Thread estimatesNoiseSender = new Thread(() =>
+{
+    while (true)
+    {
+        var message = new Message
+        {
+            Id = Guid.NewGuid(),
+            Type = MessageType.EstimatesUpdated,
+            Data = "Hihi",
+            MessageTime = DateTime.UtcNow,
+            DataVersion = "1.0",
+        };
+
+        MessageBusHelper.Send(Keys.NamespaceConnectionString, topicName, message, ConsoleColor.DarkMagenta);
+
+        Thread.Sleep(10000);
+    }
+});
+estimatesNoiseSender.Start();
 
 //Receive messages from Estimates Topic
 Thread estimatesConsumer = new Thread(() =>

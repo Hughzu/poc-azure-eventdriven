@@ -24,16 +24,16 @@ worksiteConsumerDeadLetterQueue.Start();
 
 var estimatesConsumer = new Thread(() =>
 {
-    MessageBusHelper.Receive(Keys.NamespaceConnectionString, topicNameEstimates, subscriptionName, "BillingApp-EstimatesConsumer", 
-        MessageBusHelper.StandardQueue, MessageBusHelper.MessageHandlerTemplate("BillingApp-EstimatesConsumer", ConsoleColor.Yellow, sendWorksiteCreated), MessageBusHelper.ErrorHandlerTemplate);
+    MessageBusHelper.Receive(Keys.NamespaceConnectionString, topicNameEstimates, subscriptionName, "WorksiteApp-EstimatesConsumer", 
+        MessageBusHelper.StandardQueue, MessageBusHelper.MessageHandlerTemplate("WorksiteApp-EstimatesConsumer", ConsoleColor.Yellow, sendWorksiteCreated), MessageBusHelper.ErrorHandlerTemplate);
 
 });
 estimatesConsumer.Start();
 
 var estimatesConsumerDeadLetterQueue = new Thread(() =>
 {
-    MessageBusHelper.Receive(Keys.NamespaceConnectionString, topicNameEstimates, subscriptionName, "BillingApp-EstimatesConsumer-DLQ", 
-        MessageBusHelper.DeadLetterQueue, MessageBusHelper.MessageHandlerTemplate("BillingApp-EstimatesConsumer", ConsoleColor.DarkYellow, sendWorksiteCreated), MessageBusHelper.ErrorHandlerTemplate);
+    MessageBusHelper.Receive(Keys.NamespaceConnectionString, topicNameEstimates, subscriptionName, "WorksiteApp-EstimatesConsumer-DLQ", 
+        MessageBusHelper.DeadLetterQueue, MessageBusHelper.MessageHandlerTemplate("WorksiteApp-EstimatesConsumer", ConsoleColor.DarkYellow, sendWorksiteCreated), MessageBusHelper.ErrorHandlerTemplate);
 
 });
 estimatesConsumerDeadLetterQueue.Start();
@@ -54,5 +54,5 @@ void sendWorksiteCreated()
         DataVersion = "1.0",
     };
 
-    MessageBusHelper.Send(Keys.NamespaceConnectionString, topicName, message);
+    MessageBusHelper.Send(Keys.NamespaceConnectionString, topicName, message, ConsoleColor.Magenta);
 }

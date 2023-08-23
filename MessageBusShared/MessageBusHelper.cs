@@ -19,7 +19,7 @@ namespace MessageBusShared
             SubQueue = SubQueue.DeadLetter
         };
         
-        public static async void Send(string namespaceConnectionString, string topicName, Message message)
+        public static async void Send(string namespaceConnectionString, string topicName, Message message, ConsoleColor consoleColor)
         {
             ServiceBusClient client = new ServiceBusClient(namespaceConnectionString); ;
             ServiceBusSender sender = client.CreateSender(topicName);
@@ -28,21 +28,18 @@ namespace MessageBusShared
             {
                 var serviceBusMessage = new ServiceBusMessage(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message)))
                 {
-                    CorrelationId = message.Type.ToString(),
-                    Subject = message.Id.ToString(),
+                    CorrelationId = message.Id.ToString(),
+                    Subject = message.Type.ToString(),
                     ApplicationProperties =
                 {
-                    { "id", message.Id },
+                    { "id", message.Id.ToString() },
                     { "type", (int)message.Type },
-                    { "data", message.Data },
-                    { "messagetime", message.MessageTime },
-                    { "dataversion", message.DataVersion },
-
+                    { "customData",  topicName},
                 }
                 };
                 await sender.SendMessageAsync(serviceBusMessage);
                 
-                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.ForegroundColor = consoleColor;
                 Console.WriteLine("Sent message with Id={0}, Type={1}, Data={2}", message.Id, message.Type, message.Data);
             }
             finally
