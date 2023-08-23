@@ -2,10 +2,11 @@
 using Azure.Messaging.EventHubs.Producer;
 using System.Globalization;
 using System.Text;
+using Shared_Poc_1;
 
 
 var producerClient = new EventHubProducerClient(
-    "Endpoint=sb://poceventhubns.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Nl86kAe9uXau5CeTvENKckMBTxofTmJ5k+AEhB+n1/w=",
+    Keys.storageAccountEndPoint,
     "devis-eh");
 
 //async Task ExitHandler()

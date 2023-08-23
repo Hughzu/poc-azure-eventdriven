@@ -4,17 +4,18 @@ using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using System.Collections.Concurrent;
 using System.Text;
+using Shared_Poc_1;
 
 //const string consumerGroup = "devis-eh";
 const string consumerGroup = "external-communication";
 
 var storageClient = new BlobContainerClient(
-    "DefaultEndpointsProtocol=https;AccountName=merlinpoceventhubsa;AccountKey=l6/ILjHCWIAX2E4SD+PSef4VfgVtV74Zz7P3QW3n61rqVDJDSLdL6LojK7Y5+moEGbEJZlQNwqkL+AStAlsySQ==;EndpointSuffix=core.windows.net"
+    Keys.storageAccountEndPoint
     , "devis-container");
 var processor = new EventProcessorClient(
     storageClient,
     EventHubConsumerClient.DefaultConsumerGroupName,
-    "Endpoint=sb://poceventhubns.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=Nl86kAe9uXau5CeTvENKckMBTxofTmJ5k+AEhB+n1/w=",
+    Keys.storageAccountEndPoint,
     consumerGroup,
     new EventProcessorClientOptions
     {
