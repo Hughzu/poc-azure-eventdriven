@@ -33,7 +33,7 @@ namespace MessageBusShared
                     ApplicationProperties =
                 {
                     { "id", message.Id.ToString() },
-                    { "type", (int)message.Type },
+                    { "type", ((int)message.Type).ToString() }, // works only with string ....
                     { "customData",  topicName},
                 }
                 };
@@ -41,6 +41,7 @@ namespace MessageBusShared
                 
                 Console.ForegroundColor = consoleColor;
                 Console.WriteLine("Sent message with Id={0}, Type={1}, Data={2}", message.Id, message.Type, message.Data);
+                Console.ResetColor();
             }
             finally
             {

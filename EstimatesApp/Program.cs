@@ -40,7 +40,7 @@ Thread estimatesNoiseSender = new Thread(() =>
 
         MessageBusHelper.Send(Keys.NamespaceConnectionString, topicName, message, ConsoleColor.DarkMagenta);
 
-        Thread.Sleep(10000);
+        Thread.Sleep(8000);
     }
 });
 estimatesNoiseSender.Start();
