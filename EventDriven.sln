@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBusShared", "Message
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared-Poc-1", "Shared-Poc-1\Shared-Poc-1.csproj", "{758E5528-FB74-4B3F-B37B-34B072234F96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCompleteApp", "AutoCompleteApp\AutoCompleteApp.csproj", "{FC9B8A2D-FE99-4472-AD6E-B3F7C7052463}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{758E5528-FB74-4B3F-B37B-34B072234F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{758E5528-FB74-4B3F-B37B-34B072234F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{758E5528-FB74-4B3F-B37B-34B072234F96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC9B8A2D-FE99-4472-AD6E-B3F7C7052463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC9B8A2D-FE99-4472-AD6E-B3F7C7052463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC9B8A2D-FE99-4472-AD6E-B3F7C7052463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC9B8A2D-FE99-4472-AD6E-B3F7C7052463}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +117,7 @@ Global
 		{3F2C5529-6D30-4149-9036-6647E1900EDD} = {72889FB3-0654-4EB8-9E64-5AE7273C794F}
 		{86753DC5-0425-4051-828C-2E4AEF6184A4} = {72889FB3-0654-4EB8-9E64-5AE7273C794F}
 		{758E5528-FB74-4B3F-B37B-34B072234F96} = {BF8E5E2D-D149-49FB-AE11-6446B1294492}
+		{FC9B8A2D-FE99-4472-AD6E-B3F7C7052463} = {72889FB3-0654-4EB8-9E64-5AE7273C794F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A256146-AB98-450A-B102-A9A4CFC81A18}

@@ -9,13 +9,13 @@ namespace MessageBusShared
         public static ServiceBusProcessorOptions StandardQueue = new()
         {
             ReceiveMode = ServiceBusReceiveMode.PeekLock,
-            AutoCompleteMessages = false, // abandonned the message if not explicitly completed -> pas l'air de fonctionner ..
+            AutoCompleteMessages = false,
         };
         
         public static ServiceBusProcessorOptions DeadLetterQueue = new()
         {
             ReceiveMode = ServiceBusReceiveMode.PeekLock,
-            AutoCompleteMessages = false, // abandonned the message if not explicitly completed -> pas l'air de fonctionner ..
+            AutoCompleteMessages = false,
             SubQueue = SubQueue.DeadLetter
         };
         
@@ -90,13 +90,9 @@ namespace MessageBusShared
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                }
-                finally
-                {
                     // await args.DeadLetterMessageAsync(args.Message); //to use if the format is not correct ? 
                     await args.AbandonMessageAsync(args.Message);
                 }
-                
             };
         }
 
