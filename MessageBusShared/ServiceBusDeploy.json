@@ -1,0 +1,235 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "serviceBusNamespaceName": {
+            "type": "string"
+        },
+        "worksiteBusTopicName": {
+            "type": "string"
+        },
+        "worksiteSubName": {
+            "type": "string"
+        },
+        "autoCompleteBusTopicName": {
+            "type": "string"
+        },
+        "autoCompleteSubName": {
+            "type": "string"
+        },
+        "billingBusTopicName": {
+            "type": "string"
+        },
+        "billingSubName": {
+            "type": "string"
+        },
+        "estimatesBusTopicName": {
+            "type": "string"
+        },
+        "estimatesSubName": {
+            "type": "string"
+        },
+        "serviceBusRuleName": {
+            "type": "string"
+        },
+        "sbVersion": {
+            "type": "string",
+            "defaultValue": "2022-10-01-preview",
+            "metadata": {
+                "description": "Service Bus ApiVersion used by the template"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('serviceBusNamespaceName')]",
+            "type": "Microsoft.ServiceBus/namespaces",
+            "apiVersion": "[parameters('sbVersion')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {},
+            "resources": [
+                {
+                    "apiVersion": "[parameters('sbVersion')]",
+                    "name": "[parameters('worksiteBusTopicName')]",
+                    "type": "topics",
+                    "properties": {
+                        "autoDeleteOnIdle": false
+                    },
+                    "dependsOn": [
+                        "[parameters('serviceBusNamespaceName')]"
+                    ],
+                    "resources": [
+                        {
+                            "apiVersion": "[parameters('sbVersion')]",
+                            "name": "[parameters('worksiteSubName')]",
+                            "type": "subscriptions",
+                            "properties": {
+                                "autoDeleteOnIdle": false,
+                                "maxDeliveryCount": "10",
+                                "defaultMessageTimeToLive": "P14D",
+                                "lockDuration": "PT10S"
+                            },
+                            "dependsOn": [
+                                "[parameters('worksiteBusTopicName')]"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "apiVersion": "[parameters('sbVersion')]",
+                    "name": "[parameters('autoCompleteBusTopicName')]",
+                    "type": "topics",
+                    "properties": {
+                        "autoDeleteOnIdle": false
+                    },
+                    "dependsOn": [
+                        "[parameters('serviceBusNamespaceName')]"
+                    ],
+                    "resources": [
+                        {
+                            "apiVersion": "[parameters('sbVersion')]",
+                            "name": "[parameters('autoCompleteSubName')]",
+                            "type": "subscriptions",
+                            "properties": {
+                                "autoDeleteOnIdle": false,
+                                "maxDeliveryCount": "10",
+                                "defaultMessageTimeToLive": "P14D",
+                                "lockDuration": "PT10S"
+                            },
+                            "dependsOn": [
+                                "[parameters('autoCompleteBusTopicName')]"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "apiVersion": "[parameters('sbVersion')]",
+                    "name": "[parameters('billingBusTopicName')]",
+                    "type": "topics",
+                    "properties": {
+                        "autoDeleteOnIdle": false
+                    },
+                    "dependsOn": [
+                        "[parameters('serviceBusNamespaceName')]"
+                    ],
+                    "resources": [
+                        {
+                            "apiVersion": "[parameters('sbVersion')]",
+                            "name": "[parameters('billingSubName')]",
+                            "type": "subscriptions",
+                            "properties": {
+                                "autoDeleteOnIdle": false,
+                                "maxDeliveryCount": "10",
+                                "defaultMessageTimeToLive": "P14D",
+                                "lockDuration": "PT10S"
+                            },
+                            "dependsOn": [
+                                "[parameters('billingBusTopicName')]"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "apiVersion": "[parameters('sbVersion')]",
+                    "name": "[parameters('estimatesBusTopicName')]",
+                    "type": "topics",
+                    "properties": {
+                        "autoDeleteOnIdle": false
+                    },
+                    "dependsOn": [
+                        "[parameters('serviceBusNamespaceName')]"
+                    ],
+                    "resources": [
+                        {
+                            "apiVersion": "[parameters('sbVersion')]",
+                            "name": "[parameters('estimatesSubName')]",
+                            "type": "subscriptions",
+                            "properties": {
+                                "autoDeleteOnIdle": false,
+                                "maxDeliveryCount": "10",
+                                "defaultMessageTimeToLive": "P14D",
+                                "lockDuration": "PT10S"
+                            },
+                            "dependsOn": [
+                                "[parameters('estimatesBusTopicName')]"
+                            ]
+                        },
+                        {
+                            "apiVersion": "[parameters('sbVersion')]",
+                            "name": "[parameters('billingSubName')]",
+                            "type": "subscriptions",
+                            "properties": {
+                                "autoDeleteOnIdle": false,
+                                "maxDeliveryCount": "10",
+                                "defaultMessageTimeToLive": "P14D",
+                                "lockDuration": "PT10S"
+                            },
+                            "dependsOn": [
+                                "[parameters('estimatesBusTopicName')]"
+                            ],
+                            "resources": [
+                                {
+                                    "type": "rules",
+                                    "apiVersion": "[parameters('sbVersion')]",
+                                    "name": "[parameters('serviceBusRuleName')]",
+                                    "properties": {
+                                        "correlationFilter": {
+                                            "properties": {
+                                                "type":"10003"
+                                            }
+                                        },
+                                        "filterType": "CorrelationFilter"
+                                    },
+                                    "dependsOn": [
+                                        "[parameters('billingSubName')]"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "apiVersion": "[parameters('sbVersion')]",
+                            "name": "[parameters('worksiteSubName')]",
+                            "type": "subscriptions",
+                            "properties": {
+                                "autoDeleteOnIdle": false,
+                                "maxDeliveryCount": "10",
+                                "defaultMessageTimeToLive": "P14D",
+                                "lockDuration": "PT10S"
+                            },
+                            "dependsOn": [
+                                "[parameters('estimatesBusTopicName')]"
+                            ],
+                            "resources": [
+                                {
+                                    "type": "rules",
+                                    "apiVersion": "[parameters('sbVersion')]",
+                                    "name": "[parameters('serviceBusRuleName')]",
+                                    "properties": {
+                                        "correlationFilter": {
+                                            "properties": {
+                                                "type":"10003"
+                                            }
+                                        },
+                                        "filterType": "CorrelationFilter"
+                                    },
+                                    "dependsOn": [
+                                        "[parameters('worksiteSubName')]"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "outputs": {}
+}
